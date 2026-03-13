@@ -251,8 +251,8 @@
       user-select: none;
       -webkit-user-select: none;
       /* starts off-screen until JS places it */
-      left: -200px;
-      top: -200px;
+      left: 12px;
+  top: calc(100vh - 72px);
     }
 
     .playful-message {
@@ -956,16 +956,20 @@
           : '<span>💌</span> touch for a secret <span>💌</span>';
       });
 
-      /* ── place NO button on first paint ── */
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          const { left, top } = getNextPosition();
-          noBtn.style.left = left + 'px';
-          noBtn.style.top = top + 'px';
-        });
-      });
-
-    })();
+      /* ── place NO beside YES on first paint ── */
+requestAnimationFrame(() => {
+  requestAnimationFrame(() => {
+    const yr   = yesBtn.getBoundingClientRect();
+    const BW   = noBtn.offsetWidth  || 105;
+    const BH   = noBtn.offsetHeight || 48;
+    let left   = yr.right + 14;
+    let top    = yr.top + (yr.height / 2) - (BH / 2);
+    // clamp so it never goes off the right edge
+    left = Math.min(left, window.innerWidth - BW - 12);
+    noBtn.style.left = left + 'px';
+    noBtn.style.top  = top  + 'px';
+  });
+});
   </script>
 </body>
 
