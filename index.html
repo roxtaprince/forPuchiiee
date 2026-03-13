@@ -2,968 +2,982 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport"
-    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
-  <title>💝 a question for you...</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,400&family=Poppins:wght@300;400;600&display=swap"
-    rel="stylesheet">
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    body {
-      min-height: 100vh;
-      background: radial-gradient(circle at 30% 10%, #1a0b19 0%, #230d1a 40%, #16070e 100%);
-      font-family: 'Poppins', sans-serif;
-      overflow-x: hidden;
-      position: relative;
-      touch-action: manipulation;
-    }
-
-    .floating-mist {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    .mist-particle {
-      position: absolute;
-      background: rgba(255, 215, 230, 0.4);
-      border-radius: 50%;
-      filter: blur(8px);
-      animation: floatUp 18s infinite ease-in-out;
-      opacity: 0;
-    }
-
-    @keyframes floatUp {
-      0% {
-        transform: translateY(100vh) scale(0.6);
-        opacity: 0;
-      }
-
-      25% {
-        opacity: 0.5;
-      }
-
-      75% {
-        opacity: 0.3;
-      }
-
-      100% {
-        transform: translateY(-20vh) scale(1.2);
-        opacity: 0;
-      }
-    }
-
-    /* ===== WELCOME OVERLAY ===== */
-    .welcome-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 1000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(26, 8, 20, 0.95);
-      backdrop-filter: blur(12px);
-      transition: opacity 1.2s ease, visibility 1.2s ease;
-    }
-
-    .welcome-overlay.hidden {
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-    }
-
-    .welcome-card {
-      max-width: 480px;
-      width: 90%;
-      background: rgba(30, 12, 22, 0.7);
-      backdrop-filter: blur(16px);
-      border: 2px solid rgba(255, 200, 220, 0.5);
-      border-radius: 60px;
-      padding: 2.5rem 1.5rem 2rem;
-      text-align: center;
-      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), 0 0 40px rgba(255, 140, 200, 0.4);
-      animation: floatIn 0.8s ease-out;
-      position: relative;
-      min-height: 400px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    @keyframes floatIn {
-      0% {
-        transform: scale(0.8) translateY(30px);
-        opacity: 0;
-      }
-
-      100% {
-        transform: scale(1) translateY(0);
-        opacity: 1;
-      }
-    }
-
-    .floating-hearts-welcome {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0;
-      pointer-events: none;
-      z-index: -1;
-    }
-
-    .floating-hearts-welcome span {
-      position: absolute;
-      font-size: 2rem;
-      animation: floatHeart 4s infinite;
-      opacity: 0.6;
-    }
-
-    @keyframes floatHeart {
-      0% {
-        transform: translateY(0) rotate(0deg);
-        opacity: 0.6;
-      }
-
-      50% {
-        transform: translateY(-30px) rotate(10deg);
-        opacity: 1;
-      }
-
-      100% {
-        transform: translateY(0) rotate(0deg);
-        opacity: 0.6;
-      }
-    }
-
-    .welcome-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 2.2rem;
-      color: #ffe6ed;
-      margin-bottom: 1rem;
-      text-shadow: 0 0 20px #ff99aa;
-    }
-
-    .welcome-question {
-      font-size: 2.5rem;
-      font-weight: 600;
-      background: linear-gradient(135deg, #ffb6c1, #ff99cc);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin: 1rem 0 1.5rem;
-      letter-spacing: 2px;
-    }
-
-    /* YES button container */
-    .button-container {
-      position: relative;
-      width: 100%;
-      height: 90px;
-      margin: 0.5rem 0;
-    }
-
-    /* YES button */
-    .btn-yes {
-      padding: 0.85rem 2rem;
-      font-size: 1.35rem;
-      font-weight: 600;
-      border: none;
-      border-radius: 50px;
-      cursor: pointer;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-      letter-spacing: 2px;
-      min-width: 130px;
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      top: 10px;
-      z-index: 10;
-      background: linear-gradient(135deg, #ff758c, #ff6b8b);
-      color: white;
-      border: 2px solid #ffd9e2;
-      animation: pulse 2s infinite;
-      -webkit-tap-highlight-color: transparent;
-      touch-action: manipulation;
-      user-select: none;
-      -webkit-user-select: none;
-    }
-
-    .btn-yes:active {
-      transform: translateX(-50%) scale(1.1);
-      box-shadow: 0 0 30px #ff99aa;
-    }
-
-    @keyframes pulse {
-      0% {
-        transform: translateX(-50%) scale(1);
-      }
-
-      50% {
-        transform: translateX(-50%) scale(1.05);
-      }
-
-      100% {
-        transform: translateX(-50%) scale(1);
-      }
-    }
-
-    /* NO button — fixed to viewport so it truly roams the whole screen */
-    .btn-no {
-      position: fixed;
-      z-index: 99999;
-      /* smaller size for mobile */
-      padding: 0.55rem 1.2rem;
-      font-size: 0.95rem;
-      font-weight: 600;
-      letter-spacing: 1px;
-      width: 110px;
-      border: none;
-      border-radius: 50px;
-      cursor: pointer;
-      background: rgba(50, 30, 40, 0.92);
-      color: #ffcccc;
-      border: 2px solid #ff99aa;
-      backdrop-filter: blur(5px);
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
-      /* only transition left/top – NOT transform – so position change is smooth */
-      transition: left 0.38s cubic-bezier(0.34, 1.56, 0.64, 1),
-        top 0.38s cubic-bezier(0.34, 1.56, 0.64, 1);
-      will-change: left, top;
-      -webkit-tap-highlight-color: transparent;
-      touch-action: manipulation;
-      user-select: none;
-      -webkit-user-select: none;
-      /* starts off-screen until JS places it */
-       left: 12px;
-      top: calc(100vh - 72px);
-    }
-    .playful-message {
-      font-size: 1rem;
-      color: #ffd9e2;
-      margin-top: 1.2rem;
-      font-style: italic;
-      animation: glow 2s infinite;
-      min-height: 2.4rem;
-      padding: 0 0.5rem;
-    }
-
-    @keyframes glow {
-      0% {
-        text-shadow: 0 0 5px #ff99aa;
-      }
-
-      50% {
-        text-shadow: 0 0 20px #ff99aa, 0 0 30px #ff6b8b;
-      }
-
-      100% {
-        text-shadow: 0 0 5px #ff99aa;
-      }
-    }
-
-    /* ===== MAIN BIRTHDAY PAGE ===== */
-    .main-page {
-      position: relative;
-      z-index: 10;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0.75rem;
-      opacity: 0;
-      transition: opacity 1.5s ease;
-      pointer-events: none;
-    }
-
-    .main-page.show {
-      opacity: 1;
-      pointer-events: all;
-    }
-
-    .birthday-card {
-      max-width: 480px;
-      width: 100%;
-      background: rgba(20, 8, 18, 0.48);
-      backdrop-filter: blur(16px) saturate(180%);
-      border-radius: 40px;
-      border: 1px solid rgba(255, 200, 220, 0.25);
-      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.7),
-        0 0 0 1px rgba(255, 170, 200, 0.2) inset,
-        0 0 30px rgba(255, 140, 200, 0.3);
-      padding: 2rem 1.5rem;
-      color: #fff4f0;
-      margin: 0.5rem auto;
-    }
-
-    .card-inner {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      gap: 1.5rem;
-    }
-
-    .title-decoration {
-      width: 120px;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, #fbb1c2, #ffc3d0, #fbb1c2, transparent);
-      margin: 0.4rem 0 0.2rem;
-    }
-
-    h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: 3rem;
-      font-weight: 700;
-      background: linear-gradient(135deg, #ffe6ed, #ffc1cc, #ffb0c0);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      letter-spacing: 1px;
-      margin-bottom: -0.2rem;
-      text-shadow: 0 0 25px rgba(255, 130, 170, 0.6);
-      line-height: 1.2;
-    }
-
-    .subtle-birthday {
-      font-size: 1.1rem;
-      font-weight: 300;
-      letter-spacing: 5px;
-      text-transform: uppercase;
-      color: #ffd2da;
-      background: rgba(255, 180, 200, 0.15);
-      padding: 0.2rem 1.2rem;
-      border-radius: 60px;
-      display: inline-block;
-      backdrop-filter: blur(4px);
-      border: 1px solid rgba(255, 210, 230, 0.25);
-      margin-top: -0.6rem;
-    }
-
-    .slideshow-frame {
-      width: 100%;
-      border-radius: 36px;
-      padding: 0.6rem;
-      background: rgba(255, 200, 220, 0.15);
-      backdrop-filter: blur(10px);
-      border: 1.5px solid rgba(255, 210, 230, 0.4);
-      box-shadow: 0 15px 35px -10px #1a0312,
-        0 0 0 1px rgba(255, 160, 190, 0.3) inset;
-      margin: 0.2rem 0;
-    }
-
-    .slideshow-container {
-      position: relative;
-      width: 100%;
-      aspect-ratio: 1 / 1.1;
-      border-radius: 28px;
-      overflow: hidden;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-      background: #1a0b19;
-    }
-
-.slide {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 0;
-  transition: opacity 1.8s ease-in-out;
-  border-radius: 28px;
-  border: 2px solid rgba(255, 255, 255, 0.2);
-}
-
-    .slide.active {
-      opacity: 1;
-      z-index: 2;
-    }
-
-    .photo-caption {
-      margin-top: 0.6rem;
-      font-size: 1rem;
-      font-weight: 300;
-      color: #ffd0db;
-      letter-spacing: 1px;
-      background: rgba(0, 0, 0, 0.2);
-      padding: 0.4rem 1.2rem;
-      border-radius: 40px;
-      display: inline-block;
-      backdrop-filter: blur(4px);
-      min-height: 3rem;
-    }
-
-   .poetic-line {
-  font-size: 1rem;
-  font-weight: 400;
-  font-family: 'Playfair Display', serif;
-  background: rgba(255, 245, 250, 0.08);
-  padding: 0.8rem 1rem;
-  border-radius: 60px;
-  border: 1px dashed rgba(255, 190, 215, 0.7);
-  backdrop-filter: blur(6px);
-  margin: 0.5rem 0;
-  width: 100%;
-  white-space: nowrap;
-  text-align: center;
-}
-
-    .music-player {
-      width: 100%;
-      background: rgba(40, 18, 30, 0.6);
-      backdrop-filter: blur(12px);
-      border-radius: 60px;
-      padding: 0.5rem 1.2rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border: 1px solid rgba(255, 200, 235, 0.3);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-      margin: 0.25rem 0;
-    }
-
-    .music-icon {
-      font-size: 1.6rem;
-      filter: drop-shadow(0 0 5px #ffacc0);
-    }
-
-    .music-controls {
-      display: flex;
-      align-items: center;
-      gap: 1.2rem;
-    }
-
-    .music-btn {
-      background: none;
-      border: none;
-      font-size: 2rem;
-      cursor: pointer;
-      padding: 0 0.2rem;
-      color: #ffd2dc;
-      transition: transform 0.2s ease;
-      filter: drop-shadow(0 0 6px #ff9ec0);
-      -webkit-tap-highlight-color: transparent;
-      min-height: 48px;
-    }
-
-    .music-btn:active {
-      transform: scale(0.9);
-    }
-
-    .elegant-btn {
-      background: rgba(30, 12, 22, 0.7);
-      border: 1.5px solid rgba(255, 200, 220, 0.6);
-      color: #ffdee6;
-      font-size: 1.2rem;
-      padding: 0.9rem 2.5rem;
-      border-radius: 50px;
-      backdrop-filter: blur(12px);
-      cursor: pointer;
-      box-shadow: 0 8px 25px -8px #22000e, 0 0 20px rgba(255, 105, 180, 0.3);
-      transition: all 0.3s ease;
-      margin-top: 0.5rem;
-      letter-spacing: 1.2px;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    .elegant-btn:active {
-      transform: scale(0.97);
-    }
-
-    .secret-wish {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.7s cubic-bezier(0.33, 1, 0.68, 1), opacity 0.5s ease;
-      opacity: 0;
-      width: 100%;
-      background: rgba(255, 225, 235, 0.1);
-      border-radius: 32px;
-      border: 1px solid rgba(255, 200, 230, 0.2);
-      backdrop-filter: blur(10px);
-    }
-
-    .secret-wish.show {
-  max-height: 520px;
-  opacity: 1;
-  padding: 1rem;
-  margin-top: 1rem;
-  overflow-y: auto;
-}
-
-.secret-wish p {
-  font-size: 0.88rem;
-  font-weight: 300;
-  color: #ffdae3;
-  line-height: 1.65;
-  text-align: left;
-}
-
-.secret-wish i {
-  font-size: 1.1rem;
-  display: block;
-  margin-bottom: 0.5rem;
-  color: #ffb8d2;
-  text-align: center;
-}
-
-    .floating-hearts {
-      position: absolute;
-      bottom: 10px;
-      right: 15px;
-      pointer-events: none;
-    }
-
-    .heart {
-      font-size: 1.5rem;
-      position: absolute;
-      bottom: 5px;
-      right: 5px;
-      opacity: 0.6;
-      filter: drop-shadow(0 0 8px #ff9eb5);
-      animation: heartFloat 5s infinite ease-in-out;
-    }
-
-    .heart:nth-child(2) {
-      right: 35px;
-      bottom: 15px;
-      animation-delay: 1.2s;
-      font-size: 2rem;
-    }
-
-    .heart:nth-child(3) {
-      right: -5px;
-      bottom: 30px;
-      animation-delay: 2.5s;
-      font-size: 2rem;
-    }
-
-    @keyframes heartFloat {
-      0% {
-        transform: translateY(0) rotate(0deg);
-      }
-
-      50% {
-        transform: translateY(-15px) rotate(5deg);
-      }
-
-      100% {
-        transform: translateY(0) rotate(0deg);
-      }
-    }
-
-    .sparkle-group {
-      position: absolute;
-      top: 15px;
-      left: 15px;
-      font-size: 1.6rem;
-      opacity: 0.4;
-      animation: twinkle 4s infinite;
-    }
-
-    @keyframes twinkle {
-      0% {
-        opacity: 0.2;
-        transform: scale(1);
-      }
-
-      50% {
-        opacity: 1;
-        transform: scale(1.1);
-      }
-
-      100% {
-        opacity: 0.2;
-        transform: scale(1);
-      }
-    }
-
-    /* Heart burst */
-    .burst-heart {
-      position: fixed;
-      pointer-events: none;
-      z-index: 9999;
-      font-size: 2rem;
-      animation: burstFloat 1.5s ease-out forwards;
-    }
-
-    @keyframes burstFloat {
-      0% {
-        transform: translateY(0) scale(1);
-        opacity: 1;
-      }
-
-      100% {
-        transform: translateY(-120px) scale(0.5);
-        opacity: 0;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>💝 a question for you...</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,400&family=Poppins:wght@300;400;600&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            min-height: 100vh;
+            background: radial-gradient(circle at 30% 10%, #1a0b19 0%, #230d1a 40%, #16070e 100%);
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+            position: relative;
+            touch-action: manipulation;
+        }
+
+        .floating-mist {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .mist-particle {
+            position: absolute;
+            background: rgba(255, 215, 230, 0.4);
+            border-radius: 50%;
+            filter: blur(8px);
+            animation: floatUp 18s infinite ease-in-out;
+            opacity: 0;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) scale(0.6);
+                opacity: 0;
+            }
+
+            25% {
+                opacity: 0.5;
+            }
+
+            75% {
+                opacity: 0.3;
+            }
+
+            100% {
+                transform: translateY(-20vh) scale(1.2);
+                opacity: 0;
+            }
+        }
+
+        /* ===== WELCOME OVERLAY ===== */
+        .welcome-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(26, 8, 20, 0.95);
+            backdrop-filter: blur(12px);
+            transition: opacity 1.2s ease, visibility 1.2s ease;
+        }
+
+        .welcome-overlay.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .welcome-card {
+            max-width: 480px;
+            width: 90%;
+            background: rgba(30, 12, 22, 0.7);
+            backdrop-filter: blur(16px);
+            border: 2px solid rgba(255, 200, 220, 0.5);
+            border-radius: 60px;
+            padding: 2.5rem 1.5rem 2rem;
+            text-align: center;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), 0 0 40px rgba(255, 140, 200, 0.4);
+            animation: floatIn 0.8s ease-out;
+            position: relative;
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        @keyframes floatIn {
+            0% {
+                transform: scale(0.8) translateY(30px);
+                opacity: 0;
+            }
+
+            100% {
+                transform: scale(1) translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .floating-hearts-welcome {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-hearts-welcome span {
+            position: absolute;
+            font-size: 2rem;
+            animation: floatHeart 4s infinite;
+            opacity: 0.6;
+        }
+
+        @keyframes floatHeart {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0.6;
+            }
+
+            50% {
+                transform: translateY(-30px) rotate(10deg);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0.6;
+            }
+        }
+
+        .welcome-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            color: #ffe6ed;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 20px #ff99aa;
+        }
+
+        .welcome-question {
+            font-size: 2.5rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, #ffb6c1, #ff99cc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 1rem 0 1.5rem;
+            letter-spacing: 2px;
+        }
+
+        /* YES button container */
+        .button-container {
+            position: relative;
+            width: 100%;
+            height: 90px;
+            margin: 0.5rem 0;
+        }
+
+        /* YES button */
+        .btn-yes {
+            padding: 0.85rem 2rem;
+            font-size: 1.35rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            letter-spacing: 2px;
+            min-width: 130px;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 10px;
+            z-index: 10;
+            background: linear-gradient(135deg, #ff758c, #ff6b8b);
+            color: white;
+            border: 2px solid #ffd9e2;
+            animation: pulse 2s infinite;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        .btn-yes:active {
+            transform: translateX(-50%) scale(1.1);
+            box-shadow: 0 0 30px #ff99aa;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: translateX(-50%) scale(1);
+            }
+
+            50% {
+                transform: translateX(-50%) scale(1.05);
+            }
+
+            100% {
+                transform: translateX(-50%) scale(1);
+            }
+        }
+
+        /* NO button — fixed to viewport so it truly roams the whole screen */
+        .btn-no {
+            position: fixed;
+            z-index: 99999;
+            /* smaller size for mobile */
+            padding: 0.55rem 1.2rem;
+            font-size: 0.95rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            width: 110px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            background: rgba(50, 30, 40, 0.92);
+            color: #ffcccc;
+            border: 2px solid #ff99aa;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+            /* only transition left/top – NOT transform – so position change is smooth */
+            transition: left 0.38s cubic-bezier(0.34, 1.56, 0.64, 1),
+                top 0.38s cubic-bezier(0.34, 1.56, 0.64, 1);
+            will-change: left, top;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+            user-select: none;
+            -webkit-user-select: none;
+            /* starts off-screen until JS places it */
+            left: 12px;
+            top: calc(100vh - 72px);
+        }
+
+        .playful-message {
+            font-size: 1rem;
+            color: #ffd9e2;
+            margin-top: 1.2rem;
+            font-style: italic;
+            animation: glow 2s infinite;
+            min-height: 2.4rem;
+            padding: 0 0.5rem;
+        }
+
+        @keyframes glow {
+            0% {
+                text-shadow: 0 0 5px #ff99aa;
+            }
+
+            50% {
+                text-shadow: 0 0 20px #ff99aa, 0 0 30px #ff6b8b;
+            }
+
+            100% {
+                text-shadow: 0 0 5px #ff99aa;
+            }
+        }
+
+        /* ===== MAIN BIRTHDAY PAGE ===== */
+        .main-page {
+            position: relative;
+            z-index: 10;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem;
+            opacity: 0;
+            transition: opacity 1.5s ease;
+            pointer-events: none;
+        }
+
+        .main-page.show {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .birthday-card {
+            max-width: 480px;
+            width: 100%;
+            background: rgba(20, 8, 18, 0.48);
+            backdrop-filter: blur(16px) saturate(180%);
+            border-radius: 40px;
+            border: 1px solid rgba(255, 200, 220, 0.25);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.7),
+                0 0 0 1px rgba(255, 170, 200, 0.2) inset,
+                0 0 30px rgba(255, 140, 200, 0.3);
+            padding: 2rem 1.5rem;
+            color: #fff4f0;
+            margin: 0.5rem auto;
+        }
+
+        .card-inner {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 1.5rem;
+        }
+
+        .title-decoration {
+            width: 120px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #fbb1c2, #ffc3d0, #fbb1c2, transparent);
+            margin: 0.4rem 0 0.2rem;
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #ffe6ed, #ffc1cc, #ffb0c0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 1px;
+            margin-bottom: -0.2rem;
+            text-shadow: 0 0 25px rgba(255, 130, 170, 0.6);
+            line-height: 1.2;
+        }
+
+        .subtle-birthday {
+            font-size: 1.1rem;
+            font-weight: 300;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: #ffd2da;
+            background: rgba(255, 180, 200, 0.15);
+            padding: 0.2rem 1.2rem;
+            border-radius: 60px;
+            display: inline-block;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 210, 230, 0.25);
+            margin-top: -0.6rem;
+        }
+
+        .slideshow-frame {
+            width: 100%;
+            border-radius: 36px;
+            padding: 0.6rem;
+            background: rgba(255, 200, 220, 0.15);
+            backdrop-filter: blur(10px);
+            border: 1.5px solid rgba(255, 210, 230, 0.4);
+            box-shadow: 0 15px 35px -10px #1a0312,
+                0 0 0 1px rgba(255, 160, 190, 0.3) inset;
+            margin: 0.2rem 0;
+        }
+
+        .slideshow-container {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 1 / 1.1;
+            border-radius: 28px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            background: #1a0b19;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 1.8s ease-in-out;
+            border-radius: 28px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .slide.active {
+            opacity: 1;
+            z-index: 2;
+        }
+
+        .photo-caption {
+            margin-top: 0.6rem;
+            font-size: 1rem;
+            font-weight: 300;
+            color: #ffd0db;
+            letter-spacing: 1px;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 0.4rem 1.2rem;
+            border-radius: 40px;
+            display: inline-block;
+            backdrop-filter: blur(4px);
+            min-height: 3rem;
+        }
+
+        .poetic-line {
+            font-size: 1rem;
+            font-weight: 400;
+            font-family: 'Playfair Display', serif;
+            background: rgba(255, 245, 250, 0.08);
+            padding: 0.8rem 1rem;
+            border-radius: 60px;
+            border: 1px dashed rgba(255, 190, 215, 0.7);
+            backdrop-filter: blur(6px);
+            margin: 0.5rem 0;
+            width: 100%;
+            white-space: nowrap;
+            text-align: center;
+        }
+
+        .music-player {
+            width: 100%;
+            background: rgba(40, 18, 30, 0.6);
+            backdrop-filter: blur(12px);
+            border-radius: 60px;
+            padding: 0.5rem 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid rgba(255, 200, 235, 0.3);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            margin: 0.25rem 0;
+        }
+
+        .music-icon {
+            font-size: 1.6rem;
+            filter: drop-shadow(0 0 5px #ffacc0);
+        }
+
+        .music-controls {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+        }
+
+        .music-btn {
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            padding: 0 0.2rem;
+            color: #ffd2dc;
+            transition: transform 0.2s ease;
+            filter: drop-shadow(0 0 6px #ff9ec0);
+            -webkit-tap-highlight-color: transparent;
+            min-height: 48px;
+        }
+
+        .music-btn:active {
+            transform: scale(0.9);
+        }
+
+        .elegant-btn {
+            background: rgba(30, 12, 22, 0.7);
+            border: 1.5px solid rgba(255, 200, 220, 0.6);
+            color: #ffdee6;
+            font-size: 1.2rem;
+            padding: 0.9rem 2.5rem;
+            border-radius: 50px;
+            backdrop-filter: blur(12px);
+            cursor: pointer;
+            box-shadow: 0 8px 25px -8px #22000e, 0 0 20px rgba(255, 105, 180, 0.3);
+            transition: all 0.3s ease;
+            margin-top: 0.5rem;
+            letter-spacing: 1.2px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .elegant-btn:active {
+            transform: scale(0.97);
+        }
+
+        .secret-wish {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.7s cubic-bezier(0.33, 1, 0.68, 1), opacity 0.5s ease;
+            opacity: 0;
+            width: 100%;
+            background: rgba(255, 225, 235, 0.1);
+            border-radius: 32px;
+            border: 1px solid rgba(255, 200, 230, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .secret-wish.show {
+            max-height: 520px;
+            opacity: 1;
+            padding: 1rem;
+            margin-top: 1rem;
+            overflow-y: auto;
+        }
+
+        .secret-wish p {
+            font-size: 0.88rem;
+            font-weight: 300;
+            color: #ffdae3;
+            line-height: 1.65;
+            text-align: left;
+        }
+
+        .secret-wish i {
+            font-size: 1.1rem;
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #ffb8d2;
+            text-align: center;
+        }
+
+        .floating-hearts {
+            position: absolute;
+            bottom: 10px;
+            right: 15px;
+            pointer-events: none;
+        }
+
+        .heart {
+            font-size: 1.5rem;
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            opacity: 0.6;
+            filter: drop-shadow(0 0 8px #ff9eb5);
+            animation: heartFloat 5s infinite ease-in-out;
+        }
+
+        .heart:nth-child(2) {
+            right: 35px;
+            bottom: 15px;
+            animation-delay: 1.2s;
+            font-size: 2rem;
+        }
+
+        .heart:nth-child(3) {
+            right: -5px;
+            bottom: 30px;
+            animation-delay: 2.5s;
+            font-size: 2rem;
+        }
+
+        @keyframes heartFloat {
+            0% {
+                transform: translateY(0) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-15px) rotate(5deg);
+            }
+
+            100% {
+                transform: translateY(0) rotate(0deg);
+            }
+        }
+
+        .sparkle-group {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            font-size: 1.6rem;
+            opacity: 0.4;
+            animation: twinkle 4s infinite;
+        }
+
+        @keyframes twinkle {
+            0% {
+                opacity: 0.2;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 1;
+                transform: scale(1.1);
+            }
+
+            100% {
+                opacity: 0.2;
+                transform: scale(1);
+            }
+        }
+
+        /* Heart burst */
+        .burst-heart {
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            font-size: 2rem;
+            animation: burstFloat 1.5s ease-out forwards;
+        }
+
+        @keyframes burstFloat {
+            0% {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-120px) scale(0.5);
+                opacity: 0;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-  <div class="floating-mist" id="mistContainer"></div>
+    <div class="floating-mist" id="mistContainer"></div>
 
-  <!-- ===== WELCOME OVERLAY ===== -->
-  <div class="welcome-overlay" id="welcomeOverlay">
-    <div class="welcome-card">
-      <div class="floating-hearts-welcome">
-        <span style="top:10%;left:10%;animation-delay:0s">❤️</span>
-        <span style="top:20%;right:15%;animation-delay:1s">💖</span>
-        <span style="bottom:15%;left:20%;animation-delay:2s">💘</span>
-        <span style="bottom:25%;right:25%;animation-delay:1.5s">💗</span>
-        <span style="top:40%;left:5%;animation-delay:2.5s">💕</span>
-      </div>
+    <!-- ===== WELCOME OVERLAY ===== -->
+    <div class="welcome-overlay" id="welcomeOverlay">
+        <div class="welcome-card">
+            <div class="floating-hearts-welcome">
+                <span style="top:10%;left:10%;animation-delay:0s">❤️</span>
+                <span style="top:20%;right:15%;animation-delay:1s">💖</span>
+                <span style="bottom:15%;left:20%;animation-delay:2s">💘</span>
+                <span style="bottom:25%;right:25%;animation-delay:1.5s">💗</span>
+                <span style="top:40%;left:5%;animation-delay:2.5s">💕</span>
+            </div>
 
-      <div class="welcome-title">💝 Hey Beautiful! 💝</div>
-      <div class="welcome-question">Do you love me?</div>
+            <div class="welcome-title">💝 Hey Beautiful! 💝</div>
+            <div class="welcome-question">Do you love me?</div>
 
-      <!-- YES button only inside the card -->
-      <div class="button-container">
-        <button class="btn-yes" id="yesBtn">YES 💖</button>
-      </div>
+            <!-- YES button only inside the card -->
+            <div class="button-container">
+                <button class="btn-yes" id="yesBtn">YES 💖</button>
+            </div>
 
-      <div class="playful-message" id="playfulMessage">
-        (try to catch the "No" button... if you can! 😉)
-      </div>
+            <div class="playful-message" id="playfulMessage">
+                (try to catch the "No" button... if you can! 😉)
+            </div>
+        </div>
     </div>
-  </div>
 
-  <!-- NO button lives outside the card so it can roam the full viewport -->
-  <button class="btn-no" id="noBtn">NO 😢</button>
+    <!-- NO button lives outside the card so it can roam the full viewport -->
+    <button class="btn-no" id="noBtn">NO 😢</button>
 
-  <!-- ===== MAIN BIRTHDAY PAGE ===== -->
-  <div class="main-page" id="mainPage">
-    <div class="birthday-card">
-      <div class="card-inner">
-        <div class="sparkle-group">✨</div>
+    <!-- ===== MAIN BIRTHDAY PAGE ===== -->
+    <div class="main-page" id="mainPage">
+        <div class="birthday-card">
+            <div class="card-inner">
+                <div class="sparkle-group">✨</div>
 
-        <div class="title-decoration"></div>
-        <h1>Happy Birthday</h1>
-        <div class="subtle-birthday">my puchiee</div>
+                <div class="title-decoration"></div>
+                <h1>Happy Birthday</h1>
+                <div class="subtle-birthday">my puchiee</div>
 
-        <div class="slideshow-frame">
-          <div class="slideshow-container" id="slideshowContainer">
-            <img class="slide active" src="https://drive.google.com/thumbnail?id=1vW6YomdfXXmJjM-AIFTkzdxwzWwMDy6P&sz=w800"
-              alt="photo 1" id="slide1">
-              <img class="slide" src="https://drive.google.com/thumbnail?id=1kO7X8AqQvhL62IU6t6qHAP17TfVUa0Aw"
-                alt="photo 2" id="slide8">
-            <img class="slide" src="https://drive.google.com/thumbnail?id=1O9ObesFzPC7a4GVcdRSLIMPqTDkEeeCe&sz=w800"
-              alt="photo 9" id="slide2">
-            <img class="slide" src="https://drive.google.com/thumbnail?id=1cJcOJvsB9snm70q_IBd4DvJdH_X0i9n5&sz=w800"
-              alt="photo 3" id="slide3">
-              <img class="slide" src="https://drive.google.com/thumbnail?id=1bDTVNVhXfZgX5njlUWQL3z1TkZ8i0U6C&sz=w800"
-                alt="photo 10" id="slide8">
-            <img class="slide" src="https://drive.google.com/thumbnail?id=1lGgPHoePXZgsiyZr9yhlqB2Pngc7p-L0&sz=w800"
-              alt="photo 4" id="slide4">
-            <img class="slide" src="https://drive.google.com/thumbnail?id=1sbQaEyL-n6FSaoJmRCxlgh90Rk_t2DaK&sz=w800"
-              alt="photo 5" id="slide5">
-            <img class="slide" src="https://drive.google.com/thumbnail?id=1YTXNnR0TWl2gbtEPA3SYi1xxjCysegR_&sz=w800"
-              alt="photo 6" id="slide6">
-              <img class="slide" src="https://drive.google.com/thumbnail?id=1HdjrqU3o1N6cTsX107WesnhsbGe9nDoI&sz=w800"
-                alt="photo 8" id="slide8">
-            <img class="slide" src="https://drive.google.com/thumbnail?id=18xMplfpJlUGcSre1IVjZBAcUoGp2HYQF&sz=w800"
-              alt="photo 7" id="slide7">
-          </div>
-         
+                <div class="slideshow-frame">
+                    <div class="slideshow-container" id="slideshowContainer">
+                        <img class="slide active"
+                            src="https://drive.google.com/thumbnail?id=1vW6YomdfXXmJjM-AIFTkzdxwzWwMDy6P&sz=w800"
+                            alt="photo 1" id="slide1">
+                        <img class="slide" src="https://drive.google.com/thumbnail?id=1kO7X8AqQvhL62IU6t6qHAP17TfVUa0Aw"
+                            alt="photo 2" id="slide8">
+                        <img class="slide"
+                            src="https://drive.google.com/thumbnail?id=1O9ObesFzPC7a4GVcdRSLIMPqTDkEeeCe&sz=w800"
+                            alt="photo 9" id="slide2">
+                        <img class="slide"
+                            src="https://drive.google.com/thumbnail?id=1cJcOJvsB9snm70q_IBd4DvJdH_X0i9n5&sz=w800"
+                            alt="photo 3" id="slide3">
+                        <img class="slide"
+                            src="https://drive.google.com/thumbnail?id=1bDTVNVhXfZgX5njlUWQL3z1TkZ8i0U6C&sz=w800"
+                            alt="photo 10" id="slide8">
+                        <img class="slide"
+                            src="https://drive.google.com/thumbnail?id=1lGgPHoePXZgsiyZr9yhlqB2Pngc7p-L0&sz=w800"
+                            alt="photo 4" id="slide4">
+                        <img class="slide"
+                            src="https://drive.google.com/thumbnail?id=1sbQaEyL-n6FSaoJmRCxlgh90Rk_t2DaK&sz=w800"
+                            alt="photo 5" id="slide5">
+                        <img class="slide"
+                            src="https://drive.google.com/thumbnail?id=1YTXNnR0TWl2gbtEPA3SYi1xxjCysegR_&sz=w800"
+                            alt="photo 6" id="slide6">
+                        <img class="slide"
+                            src="https://drive.google.com/thumbnail?id=1HdjrqU3o1N6cTsX107WesnhsbGe9nDoI&sz=w800"
+                            alt="photo 8" id="slide8">
+                        <img class="slide"
+                            src="https://drive.google.com/thumbnail?id=18xMplfpJlUGcSre1IVjZBAcUoGp2HYQF&sz=w800"
+                            alt="photo 7" id="slide7">
+                    </div>
+
+                </div>
+                <div class="photo-caption" id="photoCaption"></div>
+
+                <div class="poetic-line">
+                    <span>🌹</span> every side of you i love <span>🌹</span>
+                </div>
+
+                <div class="music-player">
+                    <span class="music-icon">🎵</span>
+                    <div class="song-label">About her...</div>
+                    <div class="music-controls">
+                        <button class="music-btn" id="playPauseBtn">⏸️</button>
+                    </div>
+                </div>
+
+                <button class="elegant-btn" id="unfoldBtn">
+                    <span>💌</span> touch here <span>💌</span>
+                </button>
+
+                <div class="secret-wish" id="secretMessage">
+                    <i>💕 just for you 💕</i>
+                    <p id="secretText">
+                        <!-- <span id="nameHer"></span>,<br><br> -->
+                        Nobody warns you about the quiet ones —
+                        the ones who don't demand anything,
+                        who just love you so simply, so steadily,
+                        that one day you look up and realise
+                        you've completely let your guard down.<br><br>
+                        That was you. That's still you.<br><br>
+                        Happy Birthday to the only person
+                        who could make a closed door
+                        feel like home. 🎂<br><br>
+                        <span style="font-style:italic;color:#ffc0cb;">— still annoying you, <span
+                                id="nameYours"></span></span>
+                    </p>
+                </div>
+
+                <div class="floating-hearts">
+                    <div class="heart">❤️‍🔥</div>
+                    <div class="heart">💖</div>
+                    <div class="heart">💘</div>
+                </div>
+            </div>
         </div>
-        <div class="photo-caption" id="photoCaption"></div>
-
-        <div class="poetic-line">
-          <span>🌹</span> every side of you i love <span>🌹</span>
-        </div>
-
-        <div class="music-player">
-          <span class="music-icon">🎵</span>
-          <div class="song-label">About her...</div>
-          <div class="music-controls">
-            <button class="music-btn" id="playPauseBtn">⏸️</button>
-          </div>
-        </div>
-
-        <button class="elegant-btn" id="unfoldBtn">
-          <span>💌</span> touch here <span>💌</span>
-        </button>
-
-        <div class="secret-wish" id="secretMessage">
-          <i>💕 just for you 💕</i>
-          <p id="secretText">
-            <!-- <span id="nameHer"></span>,<br><br> -->
-            Nobody warns you about the quiet ones —
-            the ones who don't demand anything,
-            who just love you so simply, so steadily,
-            that one day you look up and realise
-            you've completely let your guard down.<br><br>
-            That was you. That's still you.<br><br>
-            Happy Birthday to the only person
-            who could make a closed door
-            feel like home. 🎂<br><br>
-            <span style="font-style:italic;color:#ffc0cb;">— still annoying you, <span id="nameYours"></span></span>
-          </p>
-        </div>
-
-        <div class="floating-hearts">
-          <div class="heart">❤️‍🔥</div>
-          <div class="heart">💖</div>
-          <div class="heart">💘</div>
-        </div>
-      </div>
     </div>
-  </div>
 
-  <audio id="bgMusic" loop preload="auto">
-    <source src="https://audio.jukehost.co.uk/D7oBROnn4ZLIgMKNp5P8UWTuU106KtN0" type="audio/mp3">
-  </audio>
+    <audio id="bgMusic" loop preload="auto">
+        <source src="https://audio.jukehost.co.uk/D7oBROnn4ZLIgMKNp5P8UWTuU106KtN0" type="audio/mp3">
+    </audio>
 
-  <script>
-    (function () {
+    <script>
+        (function () {
 
-      /* ── mist particles ── */
-      const mistContainer = document.getElementById('mistContainer');
-      for (let i = 0; i < 18; i++) {
-        const p = document.createElement('div');
-        p.classList.add('mist-particle');
-        const s = 8 + Math.random() * 22;
-        p.style.cssText = `width:${s}px;height:${s}px;left:${Math.random() * 100}%;`
-          + `animation:floatUp ${14 + Math.random() * 20}s infinite ease-in-out;`
-          + `animation-delay:${Math.random() * 12}s;`
-          + `background:rgba(255,${190 + Math.floor(40 * Math.random())},${180 + Math.floor(50 * Math.random())},${(0.2 + Math.random() * 0.3).toFixed(2)});`
-          + `filter:blur(${(4 + Math.random() * 10).toFixed(1)}px);`;
-        mistContainer.appendChild(p);
-      }
+            /* ── mist particles ── */
+            const mistContainer = document.getElementById('mistContainer');
+            for (let i = 0; i < 18; i++) {
+                const p = document.createElement('div');
+                p.classList.add('mist-particle');
+                const s = 8 + Math.random() * 22;
+                p.style.cssText = `width:${s}px;height:${s}px;left:${Math.random() * 100}%;`
+                    + `animation:floatUp ${14 + Math.random() * 20}s infinite ease-in-out;`
+                    + `animation-delay:${Math.random() * 12}s;`
+                    + `background:rgba(255,${190 + Math.floor(40 * Math.random())},${180 + Math.floor(50 * Math.random())},${(0.2 + Math.random() * 0.3).toFixed(2)});`
+                    + `filter:blur(${(4 + Math.random() * 10).toFixed(1)}px);`;
+                mistContainer.appendChild(p);
+            }
 
-      /* ── elements ── */
-      const welcomeOverlay = document.getElementById('welcomeOverlay');
-      const mainPage = document.getElementById('mainPage');
-      const yesBtn = document.getElementById('yesBtn');
-      const noBtn = document.getElementById('noBtn');
-      const playfulMsg = document.getElementById('playfulMessage');
-      const audio = document.getElementById('bgMusic');
-      const playPauseBtn = document.getElementById('playPauseBtn');
+            /* ── elements ── */
+            const welcomeOverlay = document.getElementById('welcomeOverlay');
+            const mainPage = document.getElementById('mainPage');
+            const yesBtn = document.getElementById('yesBtn');
+            const noBtn = document.getElementById('noBtn');
+            const playfulMsg = document.getElementById('playfulMessage');
+            const audio = document.getElementById('bgMusic');
+            const playPauseBtn = document.getElementById('playPauseBtn');
 
-      /* ── personalisation ── */
-      const herName = "Nandani";  // <---- CHANGE THIS
-      const yourName = "Preeee";   // <---- CHANGE THIS
-      // Inject names directly into their dedicated spans — clean, no string hacks
-      const nameHerEl = document.getElementById('nameHer');
-      const nameYoursEl = document.getElementById('nameYours');
-      if (nameHerEl) nameHerEl.textContent = herName;
-      if (nameYoursEl) nameYoursEl.textContent = yourName;
+            /* ── personalisation ── */
+            const herName = "Nandani";  // <---- CHANGE THIS
+            const yourName = "Preeee";   // <---- CHANGE THIS
+            // Inject names directly into their dedicated spans — clean, no string hacks
+            const nameHerEl = document.getElementById('nameHer');
+            const nameYoursEl = document.getElementById('nameYours');
+            if (nameHerEl) nameHerEl.textContent = herName;
+            if (nameYoursEl) nameYoursEl.textContent = yourName;
 
-      /* ── heart burst ── */
-      function createHeartBurst(count) {
-        const emojis = ['❤️', '💖', '💗', '💓', '💘', '💕', '💞'];
-        for (let i = 0; i < count; i++) {
-          setTimeout(() => {
-            const h = document.createElement('div');
-            h.className = 'burst-heart';
-            h.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-            h.style.left = (10 + Math.random() * 80) + '%';
-            h.style.top = (10 + Math.random() * 80) + '%';
-            h.style.fontSize = (1.5 + Math.random() * 1.5) + 'rem';
-            h.style.animation = `burstFloat ${1 + Math.random() * 0.5}s ease-out forwards`;
-            document.body.appendChild(h);
-            setTimeout(() => h.remove(), 1600);
-          }, i * 80);
-        }
-      }
+            /* ── heart burst ── */
+            function createHeartBurst(count) {
+                const emojis = ['❤️', '💖', '💗', '💓', '💘', '💕', '💞'];
+                for (let i = 0; i < count; i++) {
+                    setTimeout(() => {
+                        const h = document.createElement('div');
+                        h.className = 'burst-heart';
+                        h.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                        h.style.left = (10 + Math.random() * 80) + '%';
+                        h.style.top = (10 + Math.random() * 80) + '%';
+                        h.style.fontSize = (1.5 + Math.random() * 1.5) + 'rem';
+                        h.style.animation = `burstFloat ${1 + Math.random() * 0.5}s ease-out forwards`;
+                        document.body.appendChild(h);
+                        setTimeout(() => h.remove(), 1600);
+                    }, i * 80);
+                }
+            }
 
-      /* ── NO button roaming logic ── */
-      const noMessages = [
-        "😏 nice try... but NO!",
-        "🤭 you can't catch me!",
-        "😘 just say YES already!",
-        "💝 nope! too slow!",
-        "🥰 you know you want to!",
-        "✨ only YES is allowed!",
-        "😆 this button runs fast!",
-        "💕 admit it... you love me!",
-        "🎯 missed me!",
-        "💗 say YES!",
-        "🦋 too quick for you!",
-        "🌟 nope! try again!"
-      ];
-      let msgIdx = 0;
+            /* ── NO button roaming logic ── */
+            const noMessages = [
+                "😏 nice try... but NO!",
+                "🤭 you can't catch me!",
+                "😘 just say YES already!",
+                "💝 nope! too slow!",
+                "🥰 you know you want to!",
+                "✨ only YES is allowed!",
+                "😆 this button runs fast!",
+                "💕 admit it... you love me!",
+                "🎯 missed me!",
+                "💗 say YES!",
+                "🦋 too quick for you!",
+                "🌟 nope! try again!"
+            ];
+            let msgIdx = 0;
 
-      /* Fixed pixel size of NO button (matches CSS width:110px, approx height 46px) */
-      const NO_W = 110;
-      const NO_H = 46;
-      const EDGE = 14; /* min gap from viewport edge */
+            /* Fixed pixel size of NO button (matches CSS width:110px, approx height 46px) */
+            const NO_W = 110;
+            const NO_H = 46;
+            const EDGE = 14; /* min gap from viewport edge */
 
-      /*
-       * Split viewport into 8 zones (3×3 minus centre).
-       * Always jump to a DIFFERENT zone than current one.
-       * Clamp so button never overflows.
-       */
-      function getNextPosition() {
-        const VW = window.innerWidth;
-        const VH = window.innerHeight;
+            /*
+             * Split viewport into 8 zones (3×3 minus centre).
+             * Always jump to a DIFFERENT zone than current one.
+             * Clamp so button never overflows.
+             */
+            function getNextPosition() {
+                const VW = window.innerWidth;
+                const VH = window.innerHeight;
 
-        /* 8 outer zones as fraction ranges */
-        const zones = [
-          [0, 0.33, 0, 0.33],  // top-left
-          [0.33, 0.67, 0, 0.33],  // top-centre
-          [0.67, 1, 0, 0.33],  // top-right
-          [0, 0.33, 0.35, 0.65],  // mid-left
-          [0.67, 1, 0.35, 0.65],  // mid-right
-          [0, 0.33, 0.67, 1],  // bottom-left
-          [0.33, 0.67, 0.67, 1],  // bottom-centre
-          [0.67, 1, 0.67, 1],  // bottom-right
-        ];
+                /* 8 outer zones as fraction ranges */
+                const zones = [
+                    [0, 0.33, 0, 0.33],  // top-left
+                    [0.33, 0.67, 0, 0.33],  // top-centre
+                    [0.67, 1, 0, 0.33],  // top-right
+                    [0, 0.33, 0.35, 0.65],  // mid-left
+                    [0.67, 1, 0.35, 0.65],  // mid-right
+                    [0, 0.33, 0.67, 1],  // bottom-left
+                    [0.33, 0.67, 0.67, 1],  // bottom-centre
+                    [0.67, 1, 0.67, 1],  // bottom-right
+                ];
 
-        /* figure out which zone we're currently in */
-        const curL = parseFloat(noBtn.style.left) || -999;
-        const curT = parseFloat(noBtn.style.top) || -999;
-        const curZone = zones.findIndex(([x0, , y0, y1], idx) => {
-          const [zx0, zx1, zy0, zy1] = zones[idx];
-          return curL >= zx0 * VW && curL < zx1 * VW && curT >= zy0 * VH && curT < zy1 * VH;
-        });
+                /* figure out which zone we're currently in */
+                const curL = parseFloat(noBtn.style.left) || -999;
+                const curT = parseFloat(noBtn.style.top) || -999;
+                const curZone = zones.findIndex(([x0, , y0, y1], idx) => {
+                    const [zx0, zx1, zy0, zy1] = zones[idx];
+                    return curL >= zx0 * VW && curL < zx1 * VW && curT >= zy0 * VH && curT < zy1 * VH;
+                });
 
-        /* build pool excluding current zone */
-        const pool = zones.filter((_, i) => i !== curZone);
-        const [x0, x1, y0, y1] = pool[Math.floor(Math.random() * pool.length)];
+                /* build pool excluding current zone */
+                const pool = zones.filter((_, i) => i !== curZone);
+                const [x0, x1, y0, y1] = pool[Math.floor(Math.random() * pool.length)];
 
-        /* random point inside zone, clamped to viewport */
-        const minL = Math.max(EDGE, Math.round(x0 * VW) + EDGE);
-        const maxL = Math.min(VW - NO_W - EDGE, Math.round(x1 * VW) - NO_W - EDGE);
-        const minT = Math.max(EDGE, Math.round(y0 * VH) + EDGE);
-        const maxT = Math.min(VH - NO_H - EDGE, Math.round(y1 * VH) - NO_H - EDGE);
+                /* random point inside zone, clamped to viewport */
+                const minL = Math.max(EDGE, Math.round(x0 * VW) + EDGE);
+                const maxL = Math.min(VW - NO_W - EDGE, Math.round(x1 * VW) - NO_W - EDGE);
+                const minT = Math.max(EDGE, Math.round(y0 * VH) + EDGE);
+                const maxT = Math.min(VH - NO_H - EDGE, Math.round(y1 * VH) - NO_H - EDGE);
 
-        const left = Math.round(minL + Math.random() * Math.max(0, maxL - minL));
-        const top = Math.round(minT + Math.random() * Math.max(0, maxT - minT));
+                const left = Math.round(minL + Math.random() * Math.max(0, maxL - minL));
+                const top = Math.round(minT + Math.random() * Math.max(0, maxT - minT));
 
-        return { left, top };
-      }
+                return { left, top };
+            }
 
-      function moveNoButton() {
-        const { left, top } = getNextPosition();
-        noBtn.style.left = left + 'px';
-        noBtn.style.top = top + 'px';
+            function moveNoButton() {
+                const { left, top } = getNextPosition();
+                noBtn.style.left = left + 'px';
+                noBtn.style.top = top + 'px';
 
-        /* rotate message */
-        msgIdx = (msgIdx + 1) % noMessages.length;
-        playfulMsg.textContent = noMessages[msgIdx];
-        playfulMsg.style.animation = 'none';
-        void playfulMsg.offsetHeight;
-        playfulMsg.style.animation = 'glow 2s infinite';
+                /* rotate message */
+                msgIdx = (msgIdx + 1) % noMessages.length;
+                playfulMsg.textContent = noMessages[msgIdx];
+                playfulMsg.style.animation = 'none';
+                void playfulMsg.offsetHeight;
+                playfulMsg.style.animation = 'glow 2s infinite';
 
-        if (navigator.vibrate) navigator.vibrate(18);
-        createHeartBurst(3);
-      }
+                if (navigator.vibrate) navigator.vibrate(18);
+                createHeartBurst(3);
+            }
 
-      /* intercept touch BEFORE finger registers – button runs away instantly */
-      noBtn.addEventListener('touchstart', e => {
-        e.preventDefault();
-        e.stopPropagation();
-        moveNoButton();
-      }, { passive: false });
+            /* intercept touch BEFORE finger registers – button runs away instantly */
+            noBtn.addEventListener('touchstart', e => {
+                e.preventDefault();
+                e.stopPropagation();
+                moveNoButton();
+            }, { passive: false });
 
-      /* desktop: escape on hover */
-      noBtn.addEventListener('mouseover', moveNoButton);
+            /* desktop: escape on hover */
+            noBtn.addEventListener('mouseover', moveNoButton);
 
-      /* last-resort fallback */
-      noBtn.addEventListener('mousedown', e => {
-        e.preventDefault();
-        moveNoButton();
-      });
+            /* last-resort fallback */
+            noBtn.addEventListener('mousedown', e => {
+                e.preventDefault();
+                moveNoButton();
+            });
 
-      /* ── YES button ── */
-      yesBtn.addEventListener('click', e => {
-        e.preventDefault();
-        document.title = '🎂 Happy Birthday! 💖';   /* change tab title */
-        noBtn.style.display = 'none';               /* hide NO forever */
-        createHeartBurst(20);
-        playfulMsg.textContent = "💖 I KNEW IT! 💖";
-        audio.volume = 0.5;
-        audio.play().catch(() => { });
-        welcomeOverlay.classList.add('hidden');
-        setTimeout(() => mainPage.classList.add('show'), 300);
-        if (navigator.vibrate) navigator.vibrate([50, 30, 50]);
-      });
+            /* ── YES button ── */
+            yesBtn.addEventListener('click', e => {
+                e.preventDefault();
+                document.title = '🎂 Happy Birthday! 💖';   /* change tab title */
+                noBtn.style.display = 'none';               /* hide NO forever */
+                createHeartBurst(20);
+                playfulMsg.textContent = "💖 I KNEW IT! 💖";
+                audio.volume = 0.5;
+                audio.play().catch(() => { });
+                welcomeOverlay.classList.add('hidden');
+                setTimeout(() => mainPage.classList.add('show'), 300);
+                if (navigator.vibrate) navigator.vibrate([50, 30, 50]);
+            });
 
-      /* ── music button ── */
-      function syncMusicBtn() {
-        if (playPauseBtn) playPauseBtn.textContent = audio.paused ? '▶️' : '⏸️';
-      }
-      if (playPauseBtn) {
-        playPauseBtn.addEventListener('click', () => {
-          audio.paused ? audio.play().then(syncMusicBtn) : (audio.pause(), syncMusicBtn());
-        });
-      }
-      audio.addEventListener('play', syncMusicBtn);
-      audio.addEventListener('pause', syncMusicBtn);
+            /* ── music button ── */
+            function syncMusicBtn() {
+                if (playPauseBtn) playPauseBtn.textContent = audio.paused ? '▶️' : '⏸️';
+            }
+            if (playPauseBtn) {
+                playPauseBtn.addEventListener('click', () => {
+                    audio.paused ? audio.play().then(syncMusicBtn) : (audio.pause(), syncMusicBtn());
+                });
+            }
+            audio.addEventListener('play', syncMusicBtn);
+            audio.addEventListener('pause', syncMusicBtn);
 
-      /* ── slideshow ── */
-      const slides = document.querySelectorAll('.slide');
-      let curSlide = 0;
-      const captionEl = document.getElementById('photoCaption');
-      const captions = [
-        "👶 Pure Innocence 👶",
-        "✨ just you being beautiful ✨",
-        "😂 Contagious laugh 😂",
-        "😎 looking absolutely cool 😎",
-        "🐷 Being Sugluuuu 🐷",
-        "🔥 Effortlessly hot 🔥",
-        "😒 Annoyed by me 😒",
-        "🌸 Blooming Beauty 🌸",
-        "💑 us together - my favorite 💑",
-        "💑 us together - my favorite 💑",
+            /* ── slideshow ── */
+            const slides = document.querySelectorAll('.slide');
+            let curSlide = 0;
+            const captionEl = document.getElementById('photoCaption');
+            const captions = [
+                "👶 Pure Innocence 👶",
+                "✨ just you being beautiful ✨",
+                "😂 Contagious laugh 😂",
+                "😎 looking absolutely cool 😎",
+                "🐷 Being Sugluuuu 🐷",
+                "🔥 Effortlessly hot 🔥",
+                "😒 Annoyed by me 😒",
+                "🌸 Blooming Beauty 🌸",
+                "💑 us together - my favorite 💑",
+                "💑 us together - my favorite 💑",
 
-      ];
-      while (captions.length < slides.length) captions.push("💕 another beautiful memory 💕");
+            ];
+            while (captions.length < slides.length) captions.push("💕 another beautiful memory 💕");
 
-      function nextSlide() {
-        slides[curSlide].classList.remove('active');
-        curSlide = (curSlide + 1) % slides.length;
-        slides[curSlide].classList.add('active');
-        if (captionEl) captionEl.innerText = captions[curSlide];
-      }
-      if (slides.length > 1) setInterval(nextSlide, 5000);
-      if (captionEl) captionEl.innerText = captions[0];
+            function nextSlide() {
+                slides[curSlide].classList.remove('active');
+                curSlide = (curSlide + 1) % slides.length;
+                slides[curSlide].classList.add('active');
+                if (captionEl) captionEl.innerText = captions[curSlide];
+            }
+            if (slides.length > 1) setInterval(nextSlide, 5000);
+            if (captionEl) captionEl.innerText = captions[0];
 
-      /* ── secret message button ── */
-      const unfoldBtn = document.getElementById('unfoldBtn');
-      const secretDiv = document.getElementById('secretMessage');
+            /* ── secret message button ── */
+            const unfoldBtn = document.getElementById('unfoldBtn');
+            const secretDiv = document.getElementById('secretMessage');
 
-      unfoldBtn.addEventListener('click', e => {
-        e.preventDefault();
-        secretDiv.classList.toggle('show');
-        if (navigator.vibrate) navigator.vibrate(20);
-        createHeartBurst(12);   /* burst fires every time */
-        unfoldBtn.innerHTML = secretDiv.classList.contains('show')
-          ? '<span>💞</span> Forever yours <span>💞</span>'
-          : '<span>💌</span> touch for a secret <span>💌</span>';
-      });
+            unfoldBtn.addEventListener('click', e => {
+                e.preventDefault();
+                secretDiv.classList.toggle('show');
+                if (navigator.vibrate) navigator.vibrate(20);
+                createHeartBurst(12);   /* burst fires every time */
+                unfoldBtn.innerHTML = secretDiv.classList.contains('show')
+                    ? '<span>💞</span> Forever yours <span>💞</span>'
+                    : '<span>💌</span> touch for a secret <span>💌</span>';
+            });
 
-/* ── place NO button on first paint ── */
-requestAnimationFrame(() => {
-  requestAnimationFrame(() => {
-    const { left, top } = getNextPosition();
-    noBtn.style.left = left + 'px';
-    noBtn.style.top  = top  + 'px';
-  });
-});
-  </script>
+            /* ── place NO button on first paint ── */
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    const { left, top } = getNextPosition();
+                    noBtn.style.left = left + 'px';
+                    noBtn.style.top = top + 'px';
+                });
+            });
+
+
+        })();
+    </script>
 </body>
 
 </html>
